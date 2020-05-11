@@ -1,38 +1,61 @@
 import { StyleSheet } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const styles = StyleSheet.create({
     all: {
+        width: '100%',
+        height: '100%',
         flex: 1,
-        backgroundColor: '#e8eaf6',
-        alignItems: 'center',
+        backgroundColor: '#fff',
+        // justifyContent: 'center',
     },
 
-    decoration: {
-        backgroundColor: '#b0003a',
-        height: 65,
+    retorno: {
+        flex: 1,
         width: '100%',
-        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        paddingTop: 15,
+    },
+
+    statusBar: {
+        backgroundColor: '#b0003a',
+        height: getStatusBarHeight(0),
+        width: '100%',
         justifyContent: 'center',
     },
 
-    searchBar: {
-        borderColor: '#e91e63',
-        backgroundColor: '#fff',
-        borderWidth: 2,
-        borderRadius: 2,
-        alignSelf: 'stretch',
-        display: 'flex',
-        marginTop: 40,
-        height: 44,
+    header: {
+        alignSelf: 'center',
+        width: '100%',
+        backgroundColor: '#d81b60',
+        height: 50,
         marginBottom: 10,
-        marginHorizontal: 10,
         alignItems: 'center',
+        flexDirection: 'row',
+        paddingRight: 20,
+        paddingLeft: 10,
+        justifyContent: 'space-between',
+    },
+
+    headerImage: {
+        width: 44,
+        height: 44,
+    },
+
+    headerImage2: {
+        width: 140,
+        height: 44,
+    },
+
+    logosHeader:{
         flexDirection: 'row',
     },
 
     iconSearch: {
         alignSelf: 'center',
-        color: '#e91e63',
+        color: '#fff',
     },
 
     searchInput: {
@@ -46,28 +69,25 @@ const styles = StyleSheet.create({
         borderRadius: 3, 
     },
 
-    alert: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-
     alertText: {
         fontSize: 18,
         color: '#999',
+        marginTop: 60,
+        textAlign: 'center',
     },
 
     alertText2: {
         fontSize: 16,
         color: '#999',
         marginRight: 10,
+        bottom: 5,
     },
 
     alertBox: {
+        position: 'absolute',
         fontSize: 16,
         color: '#999',
-        position: 'absolute',
-        right: 10 + (65/2),
-        bottom: 10 + (65/2),
+        bottom: (65/2),
         flexDirection: 'row',
     },
 
@@ -78,17 +98,16 @@ const styles = StyleSheet.create({
     },
 
     iconAlert2: {
-        alignSelf: 'center',
-        top: 2,
         color: '#999'
     },
 
     iconTrash: {
+        marginLeft: 15,
         color: '#999',
     },
 
     button: {
-        backgroundColor: '#3f51b5',
+        backgroundColor: '#d81b60',
         position: 'absolute',
         width: 65,
         height: 65,
@@ -106,19 +125,49 @@ const styles = StyleSheet.create({
     },
 
     cardList: {
+        flex: 1,
         width: '100%',
         marginBottom: 10,
-        height: '110%',
+        height: '100%',
     },
 
     card: {
         top: -10,
     },
 
+    alertLogos: {
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        opacity: 0.4,
+    },
+
+    alertLogo: {
+        width: 200,
+        height: 200,
+        justifyContent: 'center',    
+    },
+
+    alertLogo2: {
+        width: 200,
+        height: 200,
+        alignItems: 'center',
+        marginTop: -60,
+    },
+
+    alertLogoText: {
+        alignItems: 'center',
+        marginTop: -40,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginBottom: 40,
+        color: '#a00037',
+    },
+
+
     cardItem: {
         margin: 0,
         alignItems: 'center',
-        backgroundColor: '#fff',
         borderWidth: 0,
         flexDirection: 'row',
     },

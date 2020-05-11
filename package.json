@@ -26,6 +26,7 @@
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
     "react-native-sglistview": "^0.4.5",
+    "react-native-status-bar-height": "^2.5.0",
     "react-native-svg": "^12.1.0",
     "react-native-web": "~0.11.7"
   },
