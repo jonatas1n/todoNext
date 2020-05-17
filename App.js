@@ -1,119 +1,16 @@
-import React, { useState, Component } from 'react';
-import { Text, AppRegistry, TextInput, Image, Button, View, TouchableOpacity, ScrollView } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faSearch, faArrowRight, faHandPeace , faTrash } from '@fortawesome/free-solid-svg-icons';
-import BlinkView from 'react-native-blink-view';
+import React, { Component } from 'react';
+import {View,} from 'react-native';
 import styles from './Styles';
-import { Card, CheckBox } from 'react-native-elements';
 
-import logo from './assets/logo.png';
-import logo_inv from './assets/logo_inv.png';
-import typo_horizontal from './assets/typo_horizontal.png';
-import typo_vertical from './assets/typo_vertical.png';
-import typo_inv_horizontal from './assets/typo_inv_horizontal.png';
-import typo_inv_vertical from './assets/typo_inv_vertical.png';
+import Header from './src/Header';
+import ItemsList from './src/ItemsList';
 
-import Header from './src/Header.js';
-
-export default function App() {
-  const [state, setState] = useState([]);
-  
+export default function App() {  
   return (
-    <View style={styles.all}>
+    <View style={styles.container}>
       <View style={styles.statusBar}/>
       <Header/>
-      {ItemsList()}
+      <ItemsList/>
     </View>
-  );t 
-}
-
-function ItemsList(){
-  const [state, setState] = useState([]);
-
-  function hoverButton(){
-    return(
-      <TouchableOpacity onPress={ () => { setState(state => [...state, new Item]) } } style={styles.button}>
-        <Text style={styles.buttonText}>+</Text>
-      </TouchableOpacity>
-    );
-  }
-
-  function emptyScreen(){
-    if(state.length === 0){
-      return(
-        <View style={{flex: 1}}>
-          <View style={styles.alertLogos}>
-            <Image source={logo} style={styles.alertLogo}/>
-            <Image source={typo_horizontal} style={styles.alertLogo2}/>
-            <Text style={styles.alertLogoText}>Qual é a próxima tarefa?</Text>
-          </View>
-          <Text style={styles.alertText}>Não há itens na sua lista</Text>
-          <FontAwesomeIcon style={ styles.iconAlert } size={ 32 } icon={ faHandPeace } />
-          <Text blinking={true} delay={700} style={styles.alertBox}>
-            <Text style={styles.alertText2}>Adicione um item </Text>
-            <FontAwesomeIcon style={styles.iconAlert2} icon={ faArrowRight } />
-          </Text>
-        </View>
-      )
-    }
-  }
-
-  function list(){
-    if(state.length > 0){
-      return(
-        <ScrollView style={styles.cardList}>
-          {
-            state.map((u, i) => {
-              console.log(u);
-              return (
-                u.render(i)
-              )
-            })
-          }
-        </ScrollView>
-      )}
-  }
-
-  return(
-    <View style={styles.retorno}>
-      {emptyScreen()}
-      {list()}
-      {hoverButton()}
-    </View>
-  
-  )
-}
-
-class Item extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      content: '',
-      key: Date.now(),
-      check: false,
-    }
-  }
-
-  render(i){
-    console.log(this.state);
-    return(
-      <Card containerStyle={styles.card} key={i}>
-        <View style={styles.cardItem}>
-          <CheckBox
-            style={styles.cardItem}
-            checked={this.state.check}
-            containerStyle={styles.cardItem}
-            // onPress={() => this.setState(this.state.check = !this.state.check)}
-          />
-          <TextInput
-            onChangeText={(content) => this.setState({content})}  
-            placeholder={"Novo Item"}
-            style={styles.cardText}
-            />
-          <Text> {this.state.content.split(' ').map((word) => word && '🍕').join(' ')} </Text>
-          <FontAwesomeIcon style={styles.iconTrash} onPress={() => {this.setState(itemsList => itemsList.splice(i,1))}} icon={ faTrash } />
-        </View>
-      </Card>
-    )
-  }
+  );
 }
