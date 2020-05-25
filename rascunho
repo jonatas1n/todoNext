@@ -1,0 +1,168 @@
+
+import React, { Component } from 'react';
+import { Image, Text, View, TextInput, ScrollView } from 'react-native';
+import styles from '../Styles';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPlus, faHandPeace, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+// import { createStore } from 'react-redux'
+import AnimatedHideView from 'react-native-animated-hide-view';
+import DoubleClick from 'react-native-double-tap';
+// import { connect } from 'react-redux';
+
+import logo_inv from '../assets/logo_inv.png';
+import typo_inv_horizontal from '../assets/typo_inv_horizontal.png';
+
+import Note from './Note';
+import Header from './Header';
+// import ListReducer from '../services/reducers'
+
+// const store = createStore( storage );
+
+export default class Main extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      noteArray: [],
+      noteText: '',
+      addVisible: false,
+      searchVisible: false,
+    }
+    this.toggleAdd = this.toggleAdd.bind(this);
+  }
+
+  render(){
+    let notes = this.state.noteArray.reverse().map((val, key) => {
+      return <Note key={key} keyval={key} val={val}
+      deleteMethod={ () => this.deleteNote(key) }
+      checkMethod={ () => this.checkNote(key) }
+      />
+    })
+    let empty = null;
+    if(this.state.noteArray.length === 0){
+      empty = (
+        <View style={styles.emptyScreen}>
+          <Text style={styles.callText}>Qual o próximo passo?</Text>
+          <View style={styles.hintBox}>
+            <Text style={styles.alertText} >Parabéns!{'\n'}Não há itens na sua lista</Text>
+            <FontAwesomeIcon style={ styles.alertIcon } size={ 32 } icon={ faHandPeace } />
+          </View>
+        </View>
+      )
+    }
+    
+    return(
+    <View style={styles.container}>
+      <View style={styles.statusBar}/>
+      <Header/>
+      <ScrollView keyboardShouldPersistTaps='handled' endFillColor={'#b0003a'} style={styles.cardList}>
+        <AnimatedHideView unmountOnHide visible={this.state.addVisible}>
+          <View>
+            <View style={styles.createBar}>
+              <TextInput
+                style={{flex: 1, paddingLeft: 5, paddingVertical: 4, marginRight: 10, borderRadius: 5, color: '#a00037', borderColor: '#ff5c8d', borderBottomWidth: 1, fontSize: 16}}
+                onChangeText={this.addNote()}
+                onSubmitEditing={this.addNote()}
+                blurOnSubmit={false}
+                value={this.state.todoText}
+                placeholder=" Novo item..."
+                placeholderTextColor="#A0A0A0"
+                onBlur={this.toggleAdd}
+              />
+              <TouchableOpacity
+                style={styles.addButton}
+                onPress={ this.addNote }
+              >
+                <FontAwesomeIcon style={styles.addButton} color="#ff5c8d" size={ 24 } icon={ faPlus } />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </AnimatedHideView>
+        {empty}
+        {notes}
+      </ScrollView>
+      <AnimatedHideView unmountOnHide visible={!this.state.addVisible} style={{position: 'absolute', bottom: 15, right: 15,}}>
+        <TouchableOpacity
+          style={styles.button}
+          // onPress={this.toggleAdd()}
+        >
+          <FontAwesomeIcon color="#fff" size={ 24 } icon={ faPlus } />
+        </TouchableOpacity>
+      </AnimatedHideView>
+    </View>
+    );
+  }
+
+  search(){
+    this.setState({
+      searchVisible: !this.state.searchVisible,
+    });
+  }
+
+  toggleAdd(){
+    // entrada.onFocus();
+    this.setState({
+      addVisible: !this.state.addVisible
+    });
+  }
+
+  checkNote(key){
+    this.state.noteArray[key].check = !this.state.noteArray[key].check;
+    this.setState({ noteArray: this.state.noteArray });
+  }
+
+  addNote(){
+    if (this.state.noteText) {
+      let card = {
+        'id': this.generateId(),
+        'note': this.state.noteText,
+        'checked': false,
+      };
+      this.state.noteArray.push(card);
+
+      this.setState({ noteArray: this.state.noteArray });
+      this.setState({ noteText: '' });
+    }
+  }
+
+  deleteNote(key){
+    this.state.noteArray.splice(key, 1);
+    this.setState({ noteArray: this.state.noteArray });
+  }
+
+}
+
+// const mapStateToProps = (state) => {
+//   // Redux Store --> Component
+//   return {
+//       todos: state.ListReducer.todos,
+//   };
+// };
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//       reduxAddNote: () => dispatch(addNote()),
+//       reduxToggleTodo: () => dispatch(toggleTodo()),
+//       reduxDeleteNote: () => dispatch(deleteNote()),
+//       reduxChangeText: () => dispatch(changeText()),
+//   }
+// }
+
+// //Actions
+// function addNote(text){
+//   return { type: 'ADD_NOTE', text }
+// }
+
+// function changeText(text){
+//   return { type: 'CHANGE_TEXT', text }
+// }
+
+// function toggleTodo(index){
+//   return { type: 'TOGGLE_TODO', index}
+// }
+
+// function deleteNote(index){
+//   return { type: 'DELETE_NOTE', index}
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Main);
